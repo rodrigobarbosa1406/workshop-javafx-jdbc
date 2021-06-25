@@ -46,7 +46,8 @@ public class DepartamentoListController implements Initializable {
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage stagePai = Utils.stageAtual(event);
-		criarFormDialogo("/gui/DepartamentoForm.fxml", stagePai);
+		Departamento departamento = new Departamento();
+		criarFormDialogo(departamento, "/gui/DepartamentoForm.fxml", stagePai);
 	}
 	
 	public void setDepartamentoService(DepartamentoService service) {
@@ -76,10 +77,14 @@ public class DepartamentoListController implements Initializable {
 		tableViewDepartamento.setItems(obsList);
 	}
 	
-	private void criarFormDialogo(String nomeAbsoluto, Stage stagePai) {
+	private void criarFormDialogo(Departamento departamento, String nomeAbsoluto, Stage stagePai) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(nomeAbsoluto));
 			Pane pane = loader.load();
+			
+			DepartamentoFormController controller = loader.getController();
+			controller.setDepartamento(departamento);
+			controller.atualizarDadosForm();
 			
 			Stage stageDialogo = new Stage();
 			stageDialogo.setTitle("Informe os dados do departamento");
