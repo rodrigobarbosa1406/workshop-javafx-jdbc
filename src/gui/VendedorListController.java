@@ -31,6 +31,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Vendedor;
+import model.services.DepartamentoService;
 import model.services.VendedorService;
 
 public class VendedorListController implements Initializable, DataChangeListener {
@@ -113,7 +114,8 @@ public class VendedorListController implements Initializable, DataChangeListener
 
 			VendedorFormController controller = loader.getController();
 			controller.setVendedor(vendedor);
-			controller.setVendedorService(new VendedorService());
+			controller.setServices(new VendedorService(), new DepartamentoService());
+			controller.lerObjetosAssociados();
 			controller.inscreverDataChangeListener(this);
 			controller.atualizarDadosForm();
 
@@ -125,6 +127,7 @@ public class VendedorListController implements Initializable, DataChangeListener
 			stageDialogo.initModality(Modality.WINDOW_MODAL);
 			stageDialogo.showAndWait();
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IO Exception", "Erro ao ler a view", e.getMessage(), AlertType.ERROR);
 		}
 	}

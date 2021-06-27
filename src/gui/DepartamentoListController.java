@@ -110,6 +110,7 @@ public class DepartamentoListController implements Initializable, DataChangeList
 			stageDialogo.initModality(Modality.WINDOW_MODAL);
 			stageDialogo.showAndWait();
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IO Exception", "Erro ao ler a view", e.getMessage(), AlertType.ERROR);
 		}
 	}
