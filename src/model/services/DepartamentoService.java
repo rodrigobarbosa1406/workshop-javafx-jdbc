@@ -20,4 +20,8 @@ public class DepartamentoService {
 			departamentoDao.atualizar(departamento);
 		}
 	}
+	
+	public void excluir(Departamento departamento) {
+		departamentoDao.excluirPorId(departamento.getId());
+	}
 }

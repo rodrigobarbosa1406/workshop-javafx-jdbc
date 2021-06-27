@@ -3,9 +3,11 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
+import db.DbIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
@@ -19,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -43,6 +46,9 @@ public class DepartamentoListController implements Initializable, DataChangeList
 
 	@FXML
 	private TableColumn<Departamento, Departamento> tableColumnEditar;
+
+	@FXML
+	private TableColumn<Departamento, Departamento> tableColumnExcluir;
 
 	@FXML
 	private Button btNovo;
@@ -82,6 +88,7 @@ public class DepartamentoListController implements Initializable, DataChangeList
 		obsList = FXCollections.observableArrayList(lstDepartamento);
 		tableViewDepartamento.setItems(obsList);
 		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void criarFormDialogo(Departamento departamento, String nomeAbsoluto, Stage stagePai) {
@@ -129,5 +136,40 @@ public class DepartamentoListController implements Initializable, DataChangeList
 						event -> criarFormDialogo(obj, "/gui/DepartamentoForm.fxml", Utils.stageAtual(event)));
 			}
 		});
+	}
+
+	private void initRemoveButtons() {
+		tableColumnExcluir.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnExcluir.setCellFactory(param -> new TableCell<Departamento, Departamento>() {
+			private final Button button = new Button("Excluir");
+
+			@Override
+			protected void updateItem(Departamento obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> excluirEntidade(obj));
+			}
+		});
+	}
+
+	private void excluirEntidade(Departamento departamento) {
+		Optional<ButtonType> resultado = Alerts.exibirConfirmacao("Confirmação", "Tem certeza que deseja excluir?!\nEssa ação não poderá ser desfeita!");
+		
+		if (resultado.get() == ButtonType.OK) {
+			if (service == null) {
+				throw new IllegalStateException("Serviço está nulo");
+			}
+			
+			try {
+				service.excluir(departamento);
+				updateTableView();
+			} catch (DbIntegrityException e) {
+				Alerts.showAlert("Erro ao remover o objeto", null, e.getMessage(), AlertType.ERROR);
+			}
+		}
 	}
 }
