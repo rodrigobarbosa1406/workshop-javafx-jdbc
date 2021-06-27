@@ -31,26 +31,26 @@
          <children>
             <Label text="Id" />
             <Label text="Nome" GridPane.rowIndex="1" />
+            <Label text="E-mail" GridPane.rowIndex="2" />
+            <Label text="Aniversário" GridPane.rowIndex="3" />
+            <Label text="Salario Base" GridPane.rowIndex="4" />
+            <Label text="Departamento" GridPane.rowIndex="5" />
             <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="txtNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="dpAniversario" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="lblErroNome" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="txtSalarioBase" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="comboBoxDepartamento" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Salvar" />
                   <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="Cancelar" />
                </children>
             </HBox>
-            <Label text="E-mail" GridPane.rowIndex="2" />
-            <Label text="Aniversário" GridPane.rowIndex="3" />
-            <Label text="Salario Base" GridPane.rowIndex="4" />
-            <Label text="Departamento" GridPane.rowIndex="5" />
-            <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtSalarioBase" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DatePicker fx:id="dpAniversario" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="lblErroEmail" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label fx:id="lblErroAniversario" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label fx:id="lblErroSalarioBase" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <ComboBox fx:id="comboBoxDepartamento" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>
