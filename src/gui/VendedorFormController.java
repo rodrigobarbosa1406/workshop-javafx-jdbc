@@ -1,8 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -17,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Vendedor;
@@ -35,7 +39,25 @@ public class VendedorFormController implements Initializable {
 	private TextField txtNome;
 	
 	@FXML
+	private TextField txtEmail;
+	
+	@FXML
+	private DatePicker dpAniversario;
+	
+	@FXML
+	private TextField txtSalarioBase;
+	
+	@FXML
 	private Label lblErroNome;
+
+	@FXML
+	private Label lblErroEmail;
+	
+	@FXML
+	private Label lblErroAniversario;
+	
+	@FXML
+	private Label lblErroSalarioBase;
 	
 	@FXML
 	private Button btnSalvar;
@@ -117,7 +139,10 @@ public class VendedorFormController implements Initializable {
 	
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
-		Constraints.setTextFieldMaxLength(txtNome, 30);
+		Constraints.setTextFieldMaxLength(txtNome, 70);
+		Constraints.setTextFieldDouble(txtSalarioBase);
+		Constraints.setTextFieldMaxLength(txtEmail, 60);
+		Utils.formatDatePicker(dpAniversario, "dd/MM/yyyy");
 	}
 	
 	public void atualizarDadosForm() {
@@ -125,8 +150,16 @@ public class VendedorFormController implements Initializable {
 			throw new IllegalStateException("Entidade está nula");
 		}
 		
+		Locale.setDefault(Locale.US);
+		
 		txtId.setText(String.valueOf(entidade.getId()));
 		txtNome.setText(entidade.getNome());
+		txtEmail.setText(entidade.getEmail());
+		txtSalarioBase.setText(String.format("%.2f", entidade.getSalarioBase()));
+		
+		if (entidade.getAniversario() != null) {
+			dpAniversario.setValue(LocalDate.ofInstant(entidade.getAniversario().toInstant(), ZoneId.systemDefault()));
+		}
 	}
 	
 	private void setMsgErro(Map<String, String> erros) {

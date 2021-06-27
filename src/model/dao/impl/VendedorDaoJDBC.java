@@ -134,7 +134,7 @@ public class VendedorDaoJDBC implements VendedorDao {
 	}
 
 	private Vendedor instanciarVendedor(ResultSet rsBuscaPorId, Departamento departamento) throws SQLException {
-		return new Vendedor(rsBuscaPorId.getInt("Id"), rsBuscaPorId.getString("Name"), rsBuscaPorId.getString("Email"), rsBuscaPorId.getDate("BirthDate"), rsBuscaPorId.getDouble("BaseSalary"), departamento);
+		return new Vendedor(rsBuscaPorId.getInt("Id"), rsBuscaPorId.getString("Name"), rsBuscaPorId.getString("Email"), new java.util.Date(rsBuscaPorId.getTimestamp("BirthDate").getTime()), rsBuscaPorId.getDouble("BaseSalary"), departamento);
 	}
 
 	private Departamento instanciarDepartamento(ResultSet rsBuscaPorId) throws SQLException {
